@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- hibernate mapping 文件 这个文件的作用就是将对象和表建立关系 导入约束 dtd schema -->
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.djl.ssh.daily.entity.Daily"
+		table="courses" >
+		<id name="id">
+			<generator class="identity"></generator>
+		</id>
+		<property name="name" length="20"/>
+		<property name="deptName" length="20"/>
+		<property name="dayDate"/>
+		<property name="content" length="200"/>
+		<property name="ctime"/>
+		<property name="ipAddr" length="20"/>
+	</class>
+</hibernate-mapping>
+    

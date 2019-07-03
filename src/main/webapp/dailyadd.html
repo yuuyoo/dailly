@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新增日报</title>
+    <link rel="stylesheet" href="media/layui/css/layui.css" media="all">
+    <script type="text/javascript" src="media/js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="media/layui/layui.js"></script>
+</head>
+<body>
+<form class="layui-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label">姓名：</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">部门：</label>
+        <div class="layui-input-block">
+            <select name="depname">
+                <option value="研发一部">研发一部</option>
+                <option value="研发二部">研发二部</option>
+                <option value="研发三部">研发三部</option>
+                <option value="研发五部">研发五部</option>
+                <option value="研发六部">研发六部</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">日期：</label>
+        <div class="layui-input-block">
+            <input type="text" name="daydate" id="dt1">
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">日报：</label>
+        <div class="layui-input-block">
+            <textarea name="content" placeholder="请输入今日的日报内容" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">新增日报</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    //Demo
+    layui.use('form', function(){
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(formDemo)', function(data){
+            layer.msg(data.field);
+            $.ajax({
+                url:"/daily/save.action",
+                data:data.field,
+                success:function (e) {
+                    if(e.code==200){
+                        layer.msg("新增成功");
+                        location.href="dailylist.html";
+                    }else {
+                        layer.msg("新增失败，请重新尝试");
+                    }
+                }
+            })
+            return false;
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+    <!--
+    开发模式:设置为true之后 文件被修改会自动重新加载
+    生产模式下要关闭
+    常量设置
+     -->
+    <constant name="struts.devMode" value="true"></constant>
+    <!-- 上传文件最大值 -->
+    <constant name="struts.multipart.maxSize" value="22000000"></constant>
+    <constant name="struts.ognl.allowStaticMethodAccess" value="true"></constant>
+    <constant name="struts.ui.theme" value="simple"></constant>
+    <!--2、必须使用包 封装 间接或直接的继承struts-default-->
+    <package name="dailypk" namespace="/daily" extends="struts-default,json-default">
+        <!-- 映射方法 数据接口 spring默认注入的对象为类名小写开头 -->
+        <action name="save" class="dailyAction" method="save">
+            <!-- 结果处理类型为json类型 struts2-json-plugin 提供-->
+            <result type="json" name="success">
+                <param name="root">r</param>
+            </result>
+        </action>
+        <action name="pageall" class="dailyAction" method="page">
+            <!-- 结果处理类型为json类型 struts2-json-plugin 提供-->
+            <result type="json" name="success">
+                <param name="root">pageBean</param>
+            </result>
+        </action>
+    </package>
+</struts>

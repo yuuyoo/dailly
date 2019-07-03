@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>日志列表</title>
+    <link rel="stylesheet" href="media/layui/css/layui.css" media="all">
+    <script type="text/javascript" src="media/layui/layui.js"></script>
+</head>
+<body>
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-lg12">
+            <a href="dailyadd.html">新增日报</a>
+        </div>
+        <div class="layui-col-lg12">
+            <table id="demo" lay-filter="test"></table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    layui.use('table', function(){
+        var table = layui.table;
+
+        //第一个实例
+        table.render({
+            elem: '#demo'
+            ,height: 312
+            ,url: 'daily/pageall.action' //数据接口
+            ,page: true //开启分页
+            ,cols: [[ //表头
+                {field: 'id', title: '序号', width:80, sort: true, fixed: 'left'}
+                ,{field: 'name', title: '姓名'}
+                ,{field: 'deptName', title: '部门'}
+                ,{field: 'dayDate', title: '日期', sort: true}
+                ,{field: 'content', title: '日报'}
+            ]]
+        });
+
+    });
+</script>
+</body>
+</html>

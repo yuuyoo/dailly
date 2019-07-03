@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--数据库；连接信息-->
+    <!--1、加载外部的数据库配置文件-->
+    <context:property-placeholder location="classpath:dbconfig.properties"></context:property-placeholder>
+    <!--2、创建数据库连接池-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${dbdriver}"></property>
+        <property name="url" value="${dburl}"></property>
+        <property name="username" value="${dbusername}"></property>
+        <property name="password" value="${dbpassword}"></property>
+    </bean>
+
+    <!--3、创建会话创建工厂-->
+    <bean id="factoryBean" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <!--设置对应的连接池 ref属性 引用其他bean标签-->
+        <property name="dataSource" ref="dataSource"></property>
+        <!--设置注解所在的包-->
+        <property name="packagesToScan" value="com.djl.ssh.daily.entity"></property>
+        <!--<property name="mappingLocations" value="classpath*:/hbm/*.hbm.xml"></property>-->
+        <property name="hibernateProperties">
+            <props>
+                <!-- 打印执行的sql语句 -->
+                <prop key="hibernate.show_sql">true</prop>
+                <!-- 格式化sql语句 -->
+                <prop key="hibernate.format_sql">true</prop>
+                <!--设置方言-->
+                <prop key="dialect">org.hibernate.dialect.MySQL57Dialect</prop>
+                <!--设置ddl语句的执行方式：update 检查是否一致-->
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--4、创建Hibernate操作模板-->
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
+        <property name="sessionFactory" ref="factoryBean"></property>
+    </bean>
+
+    <!--5、扫描dao层注解包-->
+    <context:component-scan base-package="com.djl.ssh.daily.dao.impl"></context:component-scan>
+</beans>
